@@ -1,24 +1,24 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-
-/*Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});*/
+//  Auth
 Route::group([
-    'namespace' => '\Book\Http\Controllers'
+    'prefix' => 'auth',
+    'namespace' => '\User\Http\Controllers'
 ], function () {
-    Route::get('/', 'BookController@getFromOzon');
+    Route::post('/register', 'AuthController@register');
+    Route::post('/login', 'AuthController@login');
+    Route::get('/logout', 'AuthController@logout')->middleware('auth:api');
+});
+
+
+Route::group([
+    'middleware' => ['auth:api']
+], function () {
+    Route::group([
+        'namespace' => '\User\Http\Controllers'
+    ], function () {
+        Route::get('/user', 'UserController@detail');
+    });
 });
