@@ -22,3 +22,11 @@ Route::group([
         Route::get('/user', 'UserController@detail');
     });
 });
+
+Route::group([
+    'prefix' => 'book',
+    'middleware' => ['auth:api'],
+    'namespace' => '\Book\Http\Controllers'
+], function () {
+    Route::get('/find', 'BookController@find');
+});

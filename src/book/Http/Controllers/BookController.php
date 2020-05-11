@@ -2,14 +2,23 @@
 
 namespace Book\Http\Controllers;
 
+use Book\Services\GoogleBookService;
+
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-    public function getFromOzon()
-    {
-        $test = 'Hello world';
+    protected $googleBookService;
 
-        return $test;
+    public function __construct(
+        GoogleBookService $googleBookService
+    ) {
+        $this->googleBookService = $googleBookService;
+    }
+
+    public function find(Request $request)
+    {
+        return $this->googleBookService->getBooksByTitle($request->name, 0, 20, 'en');
     }
 }

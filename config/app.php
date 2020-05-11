@@ -134,6 +134,9 @@ return [
     |
     */
 
+    /* GOOGLE Book Token */
+    'google_book_token' => env('GOOGLE_BOOK_TOKEN'),
+
     'providers' => [
 
         /*
